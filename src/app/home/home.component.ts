@@ -42,14 +42,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this._data.goal.subscribe(res => this.goals = res);
-    this.listCount = this.goals.length;
+    this.getActualItems();
     this._data.changeGoal(this.goals);
   }
 
   addGoal (){
     this.goals.push(this.goalText);
     this.goalText = '';
-    this.listCount = this.goals.length;
+    this.getActualItems();
     this._data.changeGoal(this.goals);
 
   }
@@ -57,7 +57,12 @@ export class HomeComponent implements OnInit {
   removeGoal (i){
     this.goals.splice(i, 1);
     this._data.changeGoal(this.goals);
+    this.getActualItems();
 
+  }
+
+  getActualItems(){
+    this.listCount = this.goals.length;
   }
 
 }
