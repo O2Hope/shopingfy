@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, transition, animate, keyframes, query, stagger} from '@angular/animations'
+import { GoalsService } from '../services/goals.service';
 
 @Component({
   selector: 'app-home',
@@ -37,20 +38,26 @@ export class HomeComponent implements OnInit {
   goalText: string = '';
   goals = [];
 
-  constructor() { }
+  constructor(private  _data: GoalsService) { }
 
   ngOnInit() {
+    this._data.goal.subscribe(res => this.goals = res);
     this.listCount = this.goals.length;
+    this._data.changeGoal(this.goals);
   }
 
   addGoal (){
     this.goals.push(this.goalText);
     this.goalText = '';
     this.listCount = this.goals.length;
+    this._data.changeGoal(this.goals);
+
   }
 
   removeGoal (i){
     this.goals.splice(i, 1);
+    this._data.changeGoal(this.goals);
+
   }
 
 }
